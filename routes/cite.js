@@ -70,9 +70,12 @@ function getCitation(citation, callback) {
                 var chlen = journal.childNodes.length;
                 for (var i = 0; i < chlen; i++) {
                     var node = journal.childNodes[i];
-
-                    parsedCitation += '&' + node.nodeName.toLowerCase().replace(':', '.') +
-                        '=' + encodeURIComponent(node.firstChild.nodeValue);
+                    
+                    var text = (node.firstChild != null) ? node.firstChild.nodeValue : '';
+                       
+                        parsedCitation += '&' + node.nodeName.toLowerCase().replace(':', '.') +
+                            '=' + encodeURIComponent(text);
+                    
                 }
 
                 callback(parsedCitation);
