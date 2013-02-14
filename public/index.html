@@ -16,9 +16,7 @@
       </div>
     </div>
 
-    <div id="err" class="alert alert-error">
-      We're sorry, we couldn't process that citation. Please try again.
-    </div>
+    <div id="err" class="alert alert-error"></div>
 
     <div class="container">
       <div class="row">
@@ -68,8 +66,8 @@
     <script src="js/bootstrap.min.js"></script>
     <script type="text/javascript">
       $(document).ready(function () {
-        if (document.location.hash == "#error") {
-          $('#err').show();
+        if (document.location.hash.slice(0, 6) ==  "#error") {
+          $('#err').text(document.location.hash.split('=')[1]).show();
         }
       });
     </script>

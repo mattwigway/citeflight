@@ -19,6 +19,8 @@
 var request = require('request');
 var Dom = require('xmldom').DOMParser;
 
+var errorText = '';
+
 /**
  * Get a parsed citation for the given text, and call the callback with it
  */
@@ -31,6 +33,7 @@ function getCitation(citation, callback) {
         method: 'POST'},
             function (e, r, body) {
                 if (e || r.statusCode != 200) {
+                    errorText = 'Citation parsing failed (received status ' + r.statusCode + ' from FreeCite server';
                     callback(null);
                     return;
                 }
@@ -42,6 +45,7 @@ function getCitation(citation, callback) {
                 var cit = doc.getElementsByTagName('citation')[0];
 
                 if (cit.getAttribute('valid') != 'true') {
+                    errorText = 'Citation parsing failed; citation could not be validated by FreeCite';
                     callback(null);
                     return;
                 }
@@ -55,16 +59,13 @@ function getCitation(citation, callback) {
                         doc.getElementsByTagNameNS('info:ofi/fmt:xml:xsd:ctx', 'format')[0].firstChild.nodeValue
                     );
 
-                console.log(parsedCitation);
-
                 try {
                     var journal = doc.getElementsByTagNameNS('info:ofi/fmt:xml:xsd:ctx', 'metadata')[0].childNodes[0];
                 } catch (e) {
+                    errorText = 'Could not parse citation; OpenURL block not returned by FreeCite';
                     callback(null);
                     return;
                 }
-
-                console.log(journal);
 
                 var chlen = journal.childNodes.length;
                 for (var i = 0; i < chlen; i++) {
@@ -82,7 +83,6 @@ function getCitation(citation, callback) {
  * Get a URL for UC eLinks
  */
 function getUrlUcELinks (openurl, callback) {
-    console.log(openurl);
     callback('http://ucelinks.cdlib.org:8888/sfx_local?' + openurl);
 }
    
@@ -100,7 +100,8 @@ exports.cite = function (req, res) {
 
     if (citation == undefined || citation == null || citation == '' ||
         service == undefined || service == null || service == '') {
-        res.writeHead(302, {'Content-Type': 'text/plain', 'Location': '/#error'});
+        res.writeHead(302, {'Content-Type': 'text/plain', 'Location': '/#error=' + 
+                            encodeURIComponent('Citation and service cannot be blank')});
         
         res.end();
         return;
@@ -108,7 +109,8 @@ exports.cite = function (req, res) {
 
     getCitation(citation, function (parsed) {
         if (parsed == null) {
-            res.writeHead(302, {'Content-Type': 'text/plain', 'Location': '/#error'});
+            res.writeHead(302, {'Content-Type': 'text/plain', 'Location': '/#error=' + 
+                                encodeURIComponent(errorText)});
             res.end();
             return
         }
