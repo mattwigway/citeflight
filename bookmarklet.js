@@ -1,0 +1,1 @@
+(function () {var t = window.getSelection ? window.getSelection() : document.createRange().text();window.open('http://localhost:3000/cite?service=ucelinks&citation=' + encodeURIComponent(t));})();

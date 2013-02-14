@@ -33,15 +33,22 @@ function getCitation(citation, callback) {
                 }
                 
                 var ctx = doc.getElementsByTagNameNS('info:ofi/fmt:xml:xsd:ctx', 'context-object')[0];
-                
 
                 // The parsed citation is in OpenURL format
                 var parsedCitation = "url_ver=" + encodeURIComponent(ctx.getAttribute('version')) +
-                    "&ctx_format=" + encodeURIComponent(doc.getElementsByTagNameNS('info:ofi/fmt:xml:xsd:ctx', 'format')[0].firstChild.nodeValue);
+                    "&ctx_format=" + 
+                    encodeURIComponent(
+                        doc.getElementsByTagNameNS('info:ofi/fmt:xml:xsd:ctx', 'format')[0].firstChild.nodeValue
+                    );
 
                 console.log(parsedCitation);
 
-                var journal = doc.getElementsByTagNameNS('info:ofi/fmt:xml:xsd:ctx', 'metadata')[0].childNodes[0];
+                try {
+                    var journal = doc.getElementsByTagNameNS('info:ofi/fmt:xml:xsd:ctx', 'metadata')[0].childNodes[0];
+                } catch (e) {
+                    callback(null);
+                    return;
+                }
 
                 console.log(journal);
 
