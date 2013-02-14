@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CiteFlight Citation Autolinker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen" />
+    <link href="css/main.css" rel="stylesheet" media="screen" />
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="#">CiteFlight</a>
+        </div>
+      </div>
+    </div>
+
+    <div id="err" class="alert alert-error">
+      We're sorry, we couldn't process that citation. Please try again.
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="span8">
+          <h3>Find a citation</h3>
+          <p>
+            <form method="GET" action="/cite">
+              <textarea rows="4" name="citation" 
+                        placeholder="citation, e.g. Sassen, S., 2002. Locating Cities on Global Circuits. Environment and Urbanization, 14(1), pp. 13–30."
+                        ></textarea>
+              <!-- ^^ there cannot be any space there for placeholder to work -->
+
+
+              <!-- This will become a select when there is more than one service --->
+              <input type="hidden" name="service" value="ucelinks" />
+              
+              <input type="submit" class="btn btn-primary" value="Search" />
+            </form>
+          </p>
+        </div>
+        <div class="span4">
+          <h3>What is this?</h3>
+          <p>This is a citation autolinker; if you paste a citation into the
+            textbox at left, we'll do our best to process the citation and send
+            you over to
+            <a href="http://www.cdlib.org/services/d2d/ucelinks/">UC-eLinks</a>
+            to find the item in the UC library system.</p>
+          
+          <h3>How else can I use it?</h3>
+          <p>It works really well if you install the bookmarklet. Simply drag
+            <a class="btn btn-tiny"
+               href="javascript:(function () {var t = window.getSelection ? window.getSelection() : document.createRange().text();window.open('http://localhost:3000/cite?service=ucelinks&citation=' + encodeURIComponent(t));})();">CiteFlight</a>
+            into your bookmarks bar, select a citation on any website, and then
+            click the bookmark; a new window will open showing the UC-eLinks
+            page for that item.</p>
+
+          <h3>How does it work?</h3>
+          <p>First, it  parses your citation using the <a href="http://freecite.library.brown.edu/">FreeCite web service</a> provided by <a href="http://brown.edu">Brown University</a>. It uses the OpenURL data there to construct a URL for UC-eLinks. The code is <a href="https://github.com/mattwigway/citeflight">on GitHub</a>. Big thanks go to Brown University Library and the California Digital Library for providing the web services to make this possible.</p>
+
+          <h3>Who's behind this?</h3>
+          <p>This is a project of <a href="http://indicatrix.org">Matt Conway</a>.</p>
+            
+      </div>
+    </div>
+
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        if (document.location.hash == "#error") {
+          $('#err').show();
+        }
+      });
+    </script>
+  </body>
+</html>

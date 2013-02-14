@@ -100,16 +100,15 @@ exports.cite = function (req, res) {
 
     if (citation == undefined || citation == null || citation == '' ||
         service == undefined || service == null || service == '') {
-        res.writeHead(400, {'Content-Type': 'text/plain'});
-        res.write('Bad request; please include service and citation');
+        res.writeHead(302, {'Content-Type': 'text/plain', 'Location': '/#error'});
+        
         res.end();
         return;
     }
 
     getCitation(citation, function (parsed) {
         if (parsed == null) {
-            res.writeHead(500, {'Content-Type': 'text/plain'});
-            res.write("Internal server error; unable to parse citation");
+            res.writeHead(302, {'Content-Type': 'text/plain', 'Location': '/#error'});
             res.end();
             return
         }
@@ -120,7 +119,7 @@ exports.cite = function (req, res) {
             // TODO: 301? How does the search string affect caching?
             // 303? We want UCeLinks to have GET, but some might be picky?
             // 307?
-            res.writeHead(302, {'Content-Type': 'text/plain',
+            res.writeHead(302, {'Content-Type': 'text/html',
                                 'Location': url});
 
             res.write('<html><head><title>Redirect</title></head><body>' +
