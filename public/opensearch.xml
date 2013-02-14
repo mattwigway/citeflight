@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- template from http://www.opensearch.org/Specifications/OpenSearch/1.1#OpenSearch_description_document -->
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+  <ShortName>CiteFlight</ShortName>
+  <Description>Use CiteFlight to find citations in UC-eLinks</Description>
+  <Tags>citation cdl ucelinks</Tags>
+  <Contact>matt@indicatrix.org</Contact>
+  <Url type="text/html" 
+       template="http://localhost:3000/cite?service=ucelinks&amp;citation={searchTerms}"/>
+</OpenSearchDescription>
