@@ -38,8 +38,6 @@ function getCitation(citation, callback) {
                     return;
                 }
 
-                console.log(body);
-
                 // no errors
                 var doc = new Dom().parseFromString(body);
                 var cit = doc.getElementsByTagName('citation')[0];
