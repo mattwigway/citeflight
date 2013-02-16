@@ -6,5 +6,5 @@
   <Tags>citation cdl ucelinks</Tags>
   <Contact>matt@indicatrix.org</Contact>
   <Url type="text/html" 
-       template="http://localhost:3000/cite?service=ucelinks&amp;citation={searchTerms}"/>
+       template="http://citeflight.indicatrix.org/cite?service=ucelinks&amp;citation={searchTerms}"/>
 </OpenSearchDescription>
