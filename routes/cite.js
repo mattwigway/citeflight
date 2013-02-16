@@ -28,12 +28,12 @@ function getCitation(citation, callback) {
     request({
         // Thank you Brown University
         url: 'http://freecite.library.brown.edu/citations/create',
-        form: {citation: citation},
+        body: 'citation=' + encodeURIComponent(citation),
         headers: {'Accept': 'application/xml'},
         method: 'POST'},
             function (e, r, body) {
                 if (e || r.statusCode != 200) {
-                    errorText = 'Citation parsing failed (received status ' + r.statusCode + ' from FreeCite server';
+                    errorText = 'Citation parsing failed (received status ' + r.statusCode + ' from FreeCite server)';
                     callback(null);
                     return;
                 }
