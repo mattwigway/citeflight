@@ -74,7 +74,7 @@
     <script type="text/javascript">
       $(document).ready(function () {
         if (document.location.hash.slice(0, 6) ==  "#error") {
-          $('#err').text(document.location.hash.split('=')[1]).show();
+          $('#err').text(decodeURIComponent(document.location.hash.split('=')[1])).show();
         }
       });
     </script>
