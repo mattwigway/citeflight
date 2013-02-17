@@ -21,12 +21,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen" />
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet" media="screen" />
     <link href="css/main.css" rel="stylesheet" media="screen" />
 
     <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="CiteFlight" />
   </head>
   <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top hidden-phone">
       <div class="navbar-inner">
         <div class="container">
           <a class="brand" href="#">CiteFlight</a>
@@ -39,7 +40,8 @@
     <div class="container">
       <div class="row">
         <div class="span8">
-          <h3>Find a citation</h3>
+          <h3 class="hidden-phone">Find a citation</h3>
+          <a href="#"><h3 class="show-phone">CiteFlight</h3></a>
           <p>
             <form method="GET" action="/cite">
               <textarea rows="4" name="citation" 
